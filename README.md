@@ -1,5 +1,3 @@
-# Focus 🎯
-
 ![Focus Logo](image.png)
 
 Focus, Rust (Tauri) ve React kullanılarak geliştirilmiş, modern ve yüksek performanslı bir çalışma takip uygulamasıdır. Ders çalışma sürelerinizi, çözdüğünüz soru sayılarını ve günlük hedeflerinizi şık bir arayüzle takip etmenizi sağlar.
@@ -45,14 +43,60 @@ Geleneksel Electron uygulamaları (Visual Studio Code, Discord vb.) tipik olarak
    npm run tauri dev
    ```
 
-4. Üretim sürümünü (build) oluşturun:
+4. **Paketleri derlemek için:**
+
+   **Hepsi bir arada (Tam build):**
    ```bash
-   npm run tauri build
+   npm run build:all
    ```
+
+   **İki aşamalı yapı:** Önce hazırlık yap, sonra istediğin paketi üret:
+   ```bash
+   # Aşama 1: Frontend + Rust hazırlığı (bir kez yap)
+   npm run build:prep
+
+   # Aşama 2: İstediyin paketi seç
+   npm run build:deb        # Debian paketi
+   npm run build:appimage   # AppImage
+   npm run build:arch       # Arch Linux paketi
+   ```
+
+> [!TIP]
+> Derleme çıktıları `build/` klasörü altında toplanır:
+> - `build/dist/`: Frontend çıktıları
+> - `build/bin/`: Ana çalıştırılabilir dosya
+> - `build/target/`: Rust ara derleme dosyaları
+> - `build/makepkg/`: Arch paketi geçici dosyaları
+> - `build/packages/`: `.deb`, `.AppImage`, `.pkg.tar.zst`
+
+## 📦 Kurulum Paketleri
+
+Uygulamayı indirmek için [Releases](https://github.com/herzane/focus/releases) sayfasını kullanabilirsiniz.
+
+- 🐧 **Debian/Ubuntu:** `.deb` uzantılı dosyayı indirin.
+- 📦 **AppImage:** Herhangi bir kurulum gerektirmeden çalıştırılabilir sürüm.
+- 🏔️ **Arch Linux:** `PKGBUILD` kullanarak veya AUR (ekleme planım var müsait bir zamanda) üzerinden kurabilirsiniz.
+
+### İndirilen Dosyaları Kurma
+- **.deb:** `sudo apt install ./dosya-adi.deb` komutuyla veya çift tıklayarak kurabilirsiniz(Genelde mağzaya yönlendirir kurulum için).
+- **.AppImage:** Doğrudan çift tıklayarak çalıştırabilirsiniz. Eğer çalışmazsa; sağ tıklayıp Özellikler > İzinler > "Dosyayı bir program gibi çalıştırmaya izin ver" kutucuğunu işaretlemeniz yeterlidir.
+- **.pkg.tar.zst (Arch):** `sudo pacman -U ./dosya-adi.pkg.tar.zst` komutuyla kurabilirsiniz.
+
+### AUR Üzerinden Kurulum (Yakında)
 > [!IMPORTANT]
-> Şu an için sadece **.deb** paketi (Debian/Ubuntu tabanlı sistemler için) desteği mevcuttur. Diğer platformlar için destek ileride eklenecektir.(Tamamen keyfi olarak belki eklemeyedebilirim.)
+> Şu an için sadece manuel derleme ve Github Releases üzerinden kurulum seçenekleri mevcuttur. AUR desteği test aşamasındadır.
 
+```bash
+# AUR'a eklendiğinde: müsait bir zaman olurda :)
+yay -S focus
+```
 
+### Arch Linux (PKGBUILD) ile Kurulum
+```bash
+git clone https://github.com/herzane/focus.git
+cd focus
+makepkg -si
+```
 
 ## Katkıda Bulunun
 

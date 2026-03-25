@@ -6,8 +6,8 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "npm run build",
-    "frontendDist": "../dist"
+    "beforeBuildCommand": "",
+    "frontendDist": "../build/dist"
   },
   "app": {
     "windows": [
@@ -20,14 +20,29 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ipc: http://localhost:* http://127.0.0.1:*"
     }
   },
   "bundle": {
     "active": true,
     "targets": [
-      "deb"
+      "deb",
+      "appimage"
     ],
+    "publisher": "Herzane",
+    "category": "Productivity",
+    "shortDescription": "Profesyonel Takip ve Odaklanma Uygulaması",
+    "longDescription": "Focus, ders çalışma akışınızı yönetmenize ve verimliliğinizi artırmanıza yardımcı olan gelişmiş bir takip uygulamasıdır.",
+    "linux": {
+      "deb": {
+        "depends": [
+          "libgtk-3-0",
+          "libwebkit2gtk-4.1-0",
+          "libayatana-appindicator3-1",
+          "librsvg2-common"
+        ]
+      }
+    },
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
