@@ -4,7 +4,7 @@ pkgver=1.2.0
 pkgrel=1
 pkgdesc="Profesyonel Takip ve Odaklanma Uygulaması"
 arch=('x86_64')
-url="https://github.com/herzane/focus"
+url="https://github.com/herzane52/focus"
 license=('MIT')
 depends=(
     'gtk3'

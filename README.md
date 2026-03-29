@@ -13,11 +13,23 @@ Geleneksel Electron uygulamaları (Visual Studio Code, Discord vb.) tipik olarak
 
 - 📅 **Gelişmiş Takvim:** Günlük çalışma verilerini görselleştirin.
 - 📊 **İstatistikler:** Ders ve konu bazlı soru sayıları ve ilerleme raporları.
-- 📋 **Planlama:** Gelecek günler için ders programı ve hedef belirleme.
-- 🎨 **Modern Arayüz:** Şeffaf TitleBar, akıcı animasyonlar ve şık tasarım.
-- ⚙️ **Kişiselleştirme:** Ayarlar menüsü üzerinden uygulama deneyimini yönetin.
+- 📋 **Planlama:** Gelecek günler için ders programı ve girilen sınav tarihine kadar hedef belirleme.
+- 🎨 **Modern Arayüz:** Akıcı animasyonlar ve şık tasarım.
 
-## 🛠️ Kurulum ve Geliştirme
+## 📦 İndirme ve Kurulum
+
+Programı kullanmaya başlamak için en kolay yol, derlenmiş paketleri indirmektir.
+
+1. **GitHub Releases:** En güncel kararlı sürümleri [Releases](https://github.com/herzane52/focus/releases) sayfasından indirebilirsiniz. Kurulum talimatları sayfada yer almaktadır.
+
+### Desteklenen Paketler
+- 🐧 **Debian/Ubuntu:** `.deb` paketi.
+- 📦 **AppImage:** Tüm Linux dağıtımları için kurulum gerektirmeyen taşınabilir sürüm.
+- 🏔️ **Arch Linux:** Hazır paketi indirebilir veya PKGBUILD ile kendiniz paketleyebilirsiniz.
+
+## 🛠️ Geliştirme ve Kaynak Koddan Derleme
+
+Eğer projeye katkıda bulunmak veya en güncel geliştirme sürümünü denemek isterseniz aşağıdaki adımları takip edebilirsiniz.
 
 ### Gereksinimler
 
@@ -25,7 +37,7 @@ Geleneksel Electron uygulamaları (Visual Studio Code, Discord vb.) tipik olarak
 - [Rust](https://www.rust-lang.org/tools/install)
 - [Tauri CLI](https://tauri.app/v1/guides/getting-started/prerequisites)
 
-### Kurulum
+### Kurulum ve Çalıştırma
 
 1. Projeyi klonlayın:
    ```bash
@@ -38,65 +50,61 @@ Geleneksel Electron uygulamaları (Visual Studio Code, Discord vb.) tipik olarak
    npm install
    ```
 
-3. Geliştirme modunda çalıştırın:
+3. Test etmek amacıyla geliştirme modunda çalıştırın:
    ```bash
    npm run tauri dev
    ```
 
-4. **Paketleri derlemek için:**
+### Paketleme (Build)
 
-   **Hepsi bir arada (Tam build):**
-   ```bash
-   npm run build:all
-   ```
+Uygulamayı kendiniz paketlemek isterseniz iki yöntemden birini kullanabilirsiniz:
 
-   **İki aşamalı yapı:** Önce hazırlık yap, sonra istediğin paketi üret:
-   ```bash
-   # Aşama 1: Frontend + Rust hazırlığı (bir kez yap)
-   npm run build:prep
+#### Yöntem A: İki Aşamalı Yapı (Önerilen)
 
-   # Aşama 2: İstediyin paketi seç
-   npm run build:deb        # Debian paketi
-   npm run build:appimage   # AppImage
-   npm run build:arch       # Arch Linux paketi
-   ```
+1.  **Aşama 1: Hazırlık (Bir kez yapılması yeterlidir)**
+    ```bash
+    npm run build:prep
+    ```
+
+2.  **Aşama 2: İstediğiniz paketi üretin**
+    - **Debian paketi:** 
+    ```bash
+    npm run build:deb
+    ```
+    - **AppImage:** 
+    ```bash
+    npm run build:appimage
+    ```
+    - **Arch Linux:** 
+    ```bash
+    npm run build:arch
+    ```
+
+#### Yöntem B: Hepsi Bir Arada (Tam Build)
+
+Tüm paketleri tek komutla üretmek için:
+```bash
+npm run build:all
+```
 
 > [!TIP]
-> Derleme çıktıları `build/` klasörü altında toplanır:
-> - `build/dist/`: Frontend çıktıları
-> - `build/bin/`: Ana çalıştırılabilir dosya
-> - `build/target/`: Rust ara derleme dosyaları
-> - `build/makepkg/`: Arch paketi geçici dosyaları
-> - `build/packages/`: `.deb`, `.AppImage`, `.pkg.tar.zst`
+> Derleme çıktıları `build/packages/` klasörü altında toplanır. Paketi oluşturduktan sonra kurulum için [Releases](https://github.com/herzane52/focus/releases) sayfasındaki talimatları takip edebilirsiniz.
 
-## 📦 Kurulum Paketleri
+### Arch Linux alternatif olarak (PKGBUILD) ile Kurulum
 
-Uygulamayı indirmek için [Releases](https://github.com/herzane/focus/releases) sayfasını kullanabilirsiniz.
+Bu yöntem, `PKGBUILD` dosyamızın mevcut `.deb` paketindeki ikonları ve sistem yapılandırmalarını kullanan bir "repacker" (yeniden paketleyici) olarak tasarlanmış olması nedeniyle **önce Debian paketinin oluşturulmuş olmasını** gerektirir.
 
-- 🐧 **Debian/Ubuntu:** `.deb` uzantılı dosyayı indirin.
-- 📦 **AppImage:** Herhangi bir kurulum gerektirmeden çalıştırılabilir sürüm.
-- 🏔️ **Arch Linux:** `PKGBUILD` kullanarak veya AUR (ekleme planım var müsait bir zamanda) üzerinden kurabilirsiniz.
-
-### İndirilen Dosyaları Kurma
-- **.deb:** `sudo apt install ./dosya-adi.deb` komutuyla veya çift tıklayarak kurabilirsiniz(Genelde mağzaya yönlendirir kurulum için).
-- **.AppImage:** Doğrudan çift tıklayarak çalıştırabilirsiniz. Eğer çalışmazsa; sağ tıklayıp Özellikler > İzinler > "Dosyayı bir program gibi çalıştırmaya izin ver" kutucuğunu işaretlemeniz yeterlidir.
-- **.pkg.tar.zst (Arch):** `sudo pacman -U ./dosya-adi.pkg.tar.zst` komutuyla kurabilirsiniz.
+**Kurulum Adımları:**
+1.  Eğer henüz yapmadıysanız, `npm run build:deb` komutuyla Debian paketini oluşturun.
+2.  Ardından proje kök dizininde şu komutu çalıştırın:
+    ```bash
+    # Proje dizinindeyseniz:
+    makepkg -si
+    ```
 
 ### AUR Üzerinden Kurulum (Yakında)
 > [!IMPORTANT]
-> Şu an için sadece manuel derleme ve Github Releases üzerinden kurulum seçenekleri mevcuttur. AUR desteği test aşamasındadır.
-
-```bash
-# AUR'a eklendiğinde: müsait bir zaman olurda :)
-yay -S focus
-```
-
-### Arch Linux (PKGBUILD) ile Kurulum
-```bash
-git clone https://github.com/herzane/focus.git
-cd focus
-makepkg -si
-```
+> Şu an için AUR desteği sunulmamaktadır. Eğer topluluktan çok yoğun talep gelirse gelecekte eklenebilir.
 
 ## Katkıda Bulunun
 
