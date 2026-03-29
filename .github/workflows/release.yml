@@ -23,10 +23,15 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev
+          sudo apt-get install -y \
+            libgtk-3-dev \
+            libwebkit2gtk-4.1-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            libfuse2
 
       - name: Install frontend dependencies
         run: npm install
@@ -34,20 +39,62 @@ jobs:
       - name: Build Frontend
         run: npm run build
 
-      - name: Build Tauri App
+      # Sadece .deb üretir ve GitHub Release'e yükler
+      - name: Build & Release Tauri App (deb only)
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
-          APPIMAGE_EXTRACT_AND_RUN: 1
           NO_STRIP: 1
         with:
-          tagName: v__VERSION__ # tauri-action automatically replaces this
+          tagName: v__VERSION__
           releaseName: "Focus v__VERSION__"
           releaseBody: "Focus uygulamasının yeni sürümü."
           releaseDraft: true
           prerelease: false
+          args: --bundles deb
 
+      # AppImage'ı ayrıca build et (EGL patch uygulayabilmek için)
+      - name: Build AppImage
+        env:
+          CARGO_TARGET_DIR: ${{ github.workspace }}/build/target
+          NO_STRIP: 1
+          APPIMAGE_EXTRACT_AND_RUN: 1
+        run: npm run tauri -- build --bundles appimage
+
+      # AppRun script'ine EGL fix inject et ve AppImage'ı yeniden paketle
+      - name: Patch AppImage (EGL fix)
+        run: |
+          APPIMAGE=$(find ${{ github.workspace }}/build/target/release/bundle/appimage -name "*.AppImage" | head -1)
+          echo "Patching: $APPIMAGE"
+
+          # AppImage'ı aç
+          APPIMAGE_EXTRACT_AND_RUN=1 "$APPIMAGE" --appimage-extract
+          
+          # AppRun'a EGL fix env değişkenlerini ekle (shebang'dan sonraki ilk satıra)
+          sed -i '/^#!.*/a \\n# EGL fix: disable DMA-BUF renderer (avoids EGL_BAD_PARAMETER crash)\nexport WEBKIT_DISABLE_DMABUF_RENDERER=1\nexport NO_AT_BRIDGE=1\nexport WEBKIT_FORCE_SANDBOX=0' squashfs-root/AppRun
+
+          echo "--- Patched AppRun ---"
+          cat squashfs-root/AppRun
+          echo "----------------------"
+
+          # appimagetool indir ve yeniden paketle
+          wget -q -O appimagetool "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+          chmod +x appimagetool
+          ARCH=x86_64 APPIMAGE_EXTRACT_AND_RUN=1 ./appimagetool squashfs-root "$APPIMAGE"
+          rm -rf squashfs-root appimagetool
+
+      # Patch'lenmiş AppImage'ı Release'e yükle
+      - name: Upload Patched AppImage to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ github.workspace }}/build/target/release/bundle/appimage/*.AppImage
+          tag_name: ${{ github.ref_name }}
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Arch build için artifact aktar
       - name: Upload Build Artifacts for Arch
         uses: actions/upload-artifact@v4
         with:

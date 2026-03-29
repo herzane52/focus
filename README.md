@@ -61,28 +61,35 @@ Uygulamayı kendiniz paketlemek isterseniz iki yöntemden birini kullanabilirsin
 
 #### Yöntem A: İki Aşamalı Yapı (Önerilen)
 
+Bu yöntemde önce **hazırlık** adımını **bir kez** çalıştırırsınız; ardından ihtiyacınıza göre sadece istediğiniz paketi üretirsiniz. Bu sayede aynı build'i birden fazla kez tekrarlamak zorunda kalmazsınız.
+
 1.  **Aşama 1: Hazırlık (Bir kez yapılması yeterlidir)**
     ```bash
     npm run build:prep
     ```
 
-2.  **Aşama 2: İstediğiniz paketi üretin**
-    - **Debian paketi:** 
-    ```bash
-    npm run build:deb
-    ```
-    - **AppImage:** 
-    ```bash
-    npm run build:appimage
-    ```
-    - **Arch Linux:** 
-    ```bash
-    npm run build:arch
-    ```
+> [!TIP]
+> `build:deb`, `build:appimage` ve `build:arch` scriptleri `build:prep`'i **içermez**. Hazırlık adımını atlamamaya dikkat edin.
+
+2.  **Aşama 2: İstediğiniz paketi ayrı ayrı üretin**
+    - **Debian paketi:**
+      ```bash
+      npm run build:deb
+      ```
+    - **AppImage:**
+      ```bash
+      npm run build:appimage
+      ```
+    - **Arch Linux:**
+      ```bash
+      npm run build:arch
+      ```
+
+
 
 #### Yöntem B: Hepsi Bir Arada (Tam Build)
 
-Tüm paketleri tek komutla üretmek için:
+Tüm paketleri tek komutla üretmek için (hazırlık adımı dahil otomatik çalışır):
 ```bash
 npm run build:all
 ```
