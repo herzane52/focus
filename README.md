@@ -2,12 +2,6 @@
 
 Focus, Rust (Tauri) ve React kullanılarak geliştirilmiş, modern ve yüksek performanslı bir çalışma takip uygulamasıdır. Ders çalışma sürelerinizi, çözdüğünüz soru sayılarını ve günlük hedeflerinizi şık bir arayüzle takip etmenizi sağlar.
 
-> [!NOTE]
-> Bu proje, Electron'un ağır bellek kullanımına alternatif olarak Rust'ın gücünü kullanan bir performans denemesidir.
-
-## Neden Rust & Tauri?
-
-Geleneksel Electron uygulamaları (Visual Studio Code, Discord vb.) tipik olarak **1.2 GB+** RAM tüketirken, Rust(Tauri) aynı işlevi **~500 MB** civarında bir bellek kullanımıyla sunar. Bu, %50'den fazla performans artışı ve daha düşük sistem kaynağı tüketimi anlamına gelir.Her neyse projeye geri dönelim.
 
 ##  Özellikler
 

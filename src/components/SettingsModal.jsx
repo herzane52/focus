@@ -26,8 +26,8 @@ const SettingsModal = ({
     ];
 
     return (
-        <div className="fixed inset-0 z-110 flex items-center justify-center p-8 bg-black/90 backdrop-blur-xl animate-in fade-in duration-300">
-            <div className="bg-[#050810] border-2 border-white/10 rounded-[32px] w-full max-w-6xl max-h-[90vh] flex flex-col shadow-4xl animate-in zoom-in-95 duration-300 overflow-hidden relative">
+        <div className="fixed inset-0 z-110 flex items-center justify-center p-8 animate-in fade-in duration-300">
+            <div className="bg-[#050810] border-2 border-white/10 rounded-[32px] w-full max-w-6xl h-[85vh] min-h-[600px] flex flex-col shadow-4xl animate-in zoom-in-95 duration-300 overflow-hidden relative">
                 <header className="p-8 border-b border-white/5 flex justify-between items-center bg-slate-900/40 backdrop-blur-xl shrink-0">
                     <div className="flex gap-8">
                         {["curriculum", "exams", "data", "about"].map((tab) => (
@@ -195,7 +195,7 @@ const SettingsModal = ({
                                             TARİH
                                         </label>
                                         <input
-                                            type="date"
+                                            type="text"
                                             value={e.date}
                                             onChange={(val) => {
                                                 const newExams = [...userData.exams];
@@ -204,8 +204,9 @@ const SettingsModal = ({
                                                 setUserData(d);
                                                 onSave(d);
                                             }}
+                                            placeholder="GG.AA.YYYY"
                                             onKeyDown={(e) => e.key === "Enter" && e.target.blur()}
-                                            className="bg-slate-900 border border-white/5 rounded-lg px-3 py-1.5 text-[10px] font-black outline-none focus:border-duo-blue transition-all"
+                                            className="bg-slate-900 border border-white/5 rounded-lg px-3 py-1.5 text-[10px] font-black outline-none focus:border-duo-blue transition-all w-24 text-center placeholder:text-slate-700"
                                         />
                                     </div>
                                     <button
@@ -234,7 +235,7 @@ const SettingsModal = ({
                                             ...userData.exams,
                                             {
                                                 name: "Yeni Sınav",
-                                                date: new Date().toISOString().split("T")[0],
+                                                date: new Date().toLocaleDateString("tr-TR"),
                                             },
                                         ],
                                     };
@@ -327,7 +328,7 @@ const SettingsModal = ({
                                 <h2 className="text-3xl font-black tracking-[0.3em] text-white uppercase">FOCUS</h2>
                                 <p className="text-[10px] font-black text-slate-600 tracking-[0.5em] uppercase">Profesyonel Takip</p>
                                 <span className="inline-block mt-3 px-4 py-1.5 bg-duo-blue/10 border border-duo-blue/20 rounded-full text-[10px] font-black text-duo-blue tracking-widest uppercase">
-                                    v1.2.0
+                                    v1.3.0
                                 </span>
                             </div>
 
@@ -374,6 +375,19 @@ const SettingsModal = ({
                                     </svg>
                                 </a>
                             </div>
+
+                            {/* Centered Blue Github Sponsors Button */}
+                            <a
+                                href="https://github.com/sponsors/herzane52"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="mt-2 flex items-center justify-center gap-3 px-8 py-4 bg-duo-blue/10 hover:bg-duo-blue/20 border border-duo-blue/30 rounded-2xl transition-all group active:scale-95"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-duo-blue group-hover:scale-125 transition-transform">
+                                    <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                                </svg>
+                                <span className="font-black text-[11px] text-duo-blue tracking-[0.2em] uppercase">Bağış Yap</span>
+                            </a>
                         </div>
                     )}
                 </div>

@@ -1,4 +1,4 @@
-const DayOverlay = ({ isOpen, onClose, date, tasks, onUpdateTask, onOpenSettings }) => {
+const DayOverlay = ({ isOpen, onClose, date, tasks, onUpdateTask, onAddTask, onOpenSettings }) => {
     if (!isOpen) return null;
 
     const dateTxt = new Date(date).toLocaleDateString("tr-TR", {
@@ -9,7 +9,7 @@ const DayOverlay = ({ isOpen, onClose, date, tasks, onUpdateTask, onOpenSettings
     const totalQ = tasks.reduce((acc, t) => acc + (parseInt(t.questions) || 0), 0);
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-6">
             <div
                 className="absolute inset-0 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-500"
                 onClick={onClose}
@@ -36,7 +36,7 @@ const DayOverlay = ({ isOpen, onClose, date, tasks, onUpdateTask, onOpenSettings
                 {/* Content */}
                 <div className="p-8 max-h-[60vh] overflow-y-auto custom-scrollbar space-y-5">
                     {tasks.map((t, i) => (
-                        <div key={i} className="group bg-white/[0.02] border border-white/5 rounded-[24px] p-6 hover:bg-white/[0.04] transition-all animate-fade-up" style={{ animationDelay: `${i * 50}ms` }}>
+                        <div key={i} className="group bg-white/2 border border-white/5 rounded-[24px] p-6 hover:bg-white/4 transition-all animate-fade-up" style={{ animationDelay: `${i * 50}ms` }}>
                             <div className="flex items-center gap-6">
                                 {/* Status Check */}
                                 <button
@@ -103,13 +103,30 @@ const DayOverlay = ({ isOpen, onClose, date, tasks, onUpdateTask, onOpenSettings
                                     Bu gün için tanımlanmış bir ders bulunmuyor. Müfredatı düzenlemek ister misiniz?
                                 </p>
                             </div>
-                            <button
-                                onClick={onOpenSettings}
-                                className="px-8 py-4 bg-duo-blue hover:bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl shadow-blue-500/20 transition-all active:scale-95"
-                            >
-                                MÜFREDATI DÜZENLE
-                            </button>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={onOpenSettings}
+                                    className="px-6 py-4 bg-duo-blue hover:bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl shadow-blue-500/20 transition-all active:scale-95"
+                                >
+                                    MÜFREDATI DÜZENLE
+                                </button>
+                                <button
+                                    onClick={onAddTask}
+                                    className="px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95"
+                                >
+                                    DERS EKLE
+                                </button>
+                            </div>
                         </div>
+                    )}
+                    
+                    {tasks.length > 0 && (
+                        <button
+                            onClick={onAddTask}
+                            className="w-full py-4 border-2 border-dashed border-white/5 rounded-2xl text-[10px] font-black text-slate-500 hover:text-white hover:border-white/20 transition-all tracking-[0.2em] uppercase mt-4"
+                        >
+                            + YENİ DERS EKLE
+                        </button>
                     )}
                 </div>
 

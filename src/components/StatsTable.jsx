@@ -94,7 +94,7 @@ const StatsTable = ({ schedule }) => {
                     </button>
 
                     {isPeriodOpen && (
-                        <div className="absolute top-full right-0 mt-2 w-32 bg-slate-900 border border-white/10 rounded-xl shadow-4xl z-[100] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                        <div className="absolute top-full right-0 mt-2 w-32 bg-slate-900 border border-white/10 rounded-xl shadow-4xl z-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                             {periods.map(p => (
                                 <button
                                     key={p.id}
@@ -119,24 +119,24 @@ const StatsTable = ({ schedule }) => {
                         onClick={() => setSortBy('recent')}
                         className={`uppercase tracking-tighter transition-colors ${sortBy === 'recent' ? 'text-duo-blue' : 'text-slate-600 hover:text-slate-400'}`}
                     >
-                        TARİH
+                        EN SON ÇALIŞILAN
                     </button>
                     <button
                         onClick={() => setSortBy('questions')}
                         className={`uppercase tracking-tighter transition-colors ${sortBy === 'questions' ? 'text-duo-blue' : 'text-slate-600 hover:text-slate-400'}`}
                     >
-                        SORU
+                        SORU SAYISI
                     </button>
                 </div>
                 <span className="text-[8px] font-bold text-slate-700 uppercase tracking-widest">
-                    {filteredData.length} DERS
+                    {filteredData.length} KONU
                 </span>
             </div>
 
             <div className="flex-1 overflow-y-auto custom-scrollbar pr-1 min-h-0 space-y-1">
                 {filteredData.length > 0 ? (
                     filteredData.map((item, idx) => (
-                        <div key={idx} className="group flex items-center justify-between p-3 rounded-xl hover:bg-white/[0.03] transition-all cursor-default animate-fade-up" style={{ animationDelay: `${idx * 50}ms` }}>
+                        <div key={idx} className="group flex items-center justify-between p-3 rounded-xl hover:bg-white/3 transition-all cursor-default animate-fade-up" style={{ animationDelay: `${idx * 50}ms` }}>
                             <div className="flex items-center gap-3 min-w-0 flex-1">
                                 <div className="w-1 h-1 rounded-full bg-duo-orange/40 group-hover:bg-duo-orange transition-all"></div>
                                 <div className="flex flex-col min-w-0">
@@ -152,7 +152,7 @@ const StatsTable = ({ schedule }) => {
                                 <span className="text-sm font-black text-duo-blue tracking-tighter group-hover:scale-110 transition-transform">
                                     {item.questions}
                                 </span>
-                                <span className="text-[7px] font-black text-slate-700 uppercase tracking-widest">VERİ</span>
+                                <span className="text-[7px] font-black text-slate-700 uppercase tracking-widest">SORU</span>
                             </div>
                         </div>
                     ))

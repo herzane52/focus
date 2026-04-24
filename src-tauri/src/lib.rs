@@ -37,7 +37,15 @@ pub struct UserData {
 }
 
 fn get_data_path(app_handle: &tauri::AppHandle) -> PathBuf {
-    let filename = if cfg!(debug_assertions) {
+    let filename = if let Ok(val) = std::env::var("FOCUS_ENV") {
+        if val == "test" {
+            "user_data_test.json"
+        } else if val == "dev" {
+            "user_data_dev.json"
+        } else {
+            "user_data.json"
+        }
+    } else if cfg!(debug_assertions) {
         "user_data_dev.json"
     } else {
         "user_data.json"

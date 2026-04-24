@@ -12,14 +12,37 @@ const Calendar = ({ schedule, selectedDay, onSelectDay }) => {
         const days = [];
         const firstDayIndex = (date.getDay() + 6) % 7;
         const prevMonthLastDate = new Date(year, month, 0).getDate();
+        
+        const prevDate = new Date(year, month - 1, 1);
+        const prevFirstDayIndex = (prevDate.getDay() + 6) % 7;
+        
         for (let i = firstDayIndex; i > 0; i--) {
-            days.push({ day: prevMonthLastDate - i + 1, month: month - 1, year, inactive: true });
+            const dayNum = prevMonthLastDate - i + 1;
+            const slotIndexInPrevMonth = prevFirstDayIndex + dayNum - 1;
+            const wasPushed = slotIndexInPrevMonth >= 35;
+            
+            let pYear = year;
+            let pMonth = month - 1;
+            if (pMonth < 0) {
+                pMonth = 11;
+                pYear = year - 1;
+            }
+            
+            days.push({ 
+                day: dayNum, 
+                month: pMonth, 
+                year: pYear, 
+                inactive: !wasPushed,
+                isPushed: wasPushed 
+            });
         }
+        
         const lastDate = new Date(year, month + 1, 0).getDate();
         for (let i = 1; i <= lastDate; i++) {
-            days.push({ day: i, month, year, inactive: false });
+            days.push({ day: i, month, year, inactive: false, isPushed: false });
         }
-        return days;
+        
+        return days.slice(0, 35);
     }, [currentMonth]);
 
     const monthName = currentMonth.toLocaleDateString("tr-TR", {
@@ -86,7 +109,7 @@ const Calendar = ({ schedule, selectedDay, onSelectDay }) => {
                             onClick={() => !d.inactive && onSelectDay(dateStr)}
                             className={`
                 relative h-20 sm:h-24 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 group
-                ${d.inactive ? "opacity-5 pointer-events-none" : "hover:bg-white/10 hover:z-20"}
+                ${d.inactive ? "opacity-5 pointer-events-none" : "hover:bg-white/10 hover:z-60"}
                 ${isToday ? "bg-duo-blue text-white z-10" : ""}
                 ${active ? "border-2 border-duo-blue z-20" : ""}
                 ${!isToday && !isFuture && dayTasks.length > 0 ? (completedCount === dayTasks.length ? "bg-duo-green/10" : "bg-duo-orange/10") : ""}
@@ -94,6 +117,10 @@ const Calendar = ({ schedule, selectedDay, onSelectDay }) => {
               `}
                         >
                             <span className={`text-xl font-black tracking-tighter ${isToday ? "text-white" : "text-slate-200"}`}>{d.day}</span>
+
+                            {d.isPushed && (
+                                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-duo-blue/60 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+                            )}
 
                             {dayTasks.length > 0 && !isToday && (
                                 <div

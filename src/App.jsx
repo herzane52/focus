@@ -38,6 +38,26 @@ function App() {
         setLoading(false);
       }
     })();
+
+    // Maximize durumunu dinle (Pencere boşluklarını ve kenarları dinamik yapmak için)
+    let unlistenResize = null;
+    (async () => {
+      try {
+        const { getCurrentWindow } = await import('@tauri-apps/api/window');
+        const appWindow = getCurrentWindow();
+        const checkMax = async () => {
+          const max = await appWindow.isMaximized();
+          setIsMaximized(max);
+        };
+        await checkMax();
+        unlistenResize = await appWindow.onResized(checkMax);
+      } catch (err) {
+        console.error("Window API error:", err);
+      }
+    })();
+    return () => {
+      if (unlistenResize) unlistenResize();
+    };
   }, []);
 
   const save = (d) => {
@@ -102,8 +122,22 @@ function App() {
     }
   };
 
+  const parseDateStr = (dStr) => {
+    if (!dStr) return new Date(NaN);
+    const parts = dStr.split(/[\/\-\.]/);
+    if (parts.length === 3) {
+      if (parts[0].length === 4) return new Date(parts[0], parts[1] - 1, parts[2]);
+      return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+    return new Date(dStr);
+  };
+
   const applyTemplateUntilExam = (examDateStr) => {
-    const examDate = new Date(examDateStr);
+    const examDate = parseDateStr(examDateStr);
+    if (isNaN(examDate.getTime())) {
+      alert("Lütfen geçerli bir tarih girin (örn: 25.04.2026)");
+      return;
+    }
     const todayStr = new Date().toISOString().split("T")[0];
     const newSchedule = { ...userData.schedule };
 
@@ -146,7 +180,7 @@ function App() {
   const stats = useMemo(() => {
     const exams = userData.exams.map((e) => ({
       ...e,
-      days: Math.ceil((new Date(e.date) - new Date()) / (1000 * 60 * 60 * 24)),
+      days: Math.ceil((parseDateStr(e.date) - new Date()) / (1000 * 60 * 60 * 24)),
     }));
     // Ortalama başarı
     const allEntries = Object.values(userData.schedule);
@@ -210,6 +244,8 @@ function App() {
     return Array.from(topics).sort();
   }, [userData]);
 
+  const [isMaximized, setIsMaximized] = useState(false);
+
   if (loading) {
     return (
       <div className="h-screen bg-[#0d121f] flex flex-col items-center justify-center gap-6">
@@ -230,7 +266,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-dark-navy rounded-[20px] border border-white/10 shadow-4xl select-none font-sans m-2">
+    <div className={`flex flex-col overflow-hidden bg-dark-navy shadow-4xl select-none font-sans ${isMaximized ? 'w-screen h-screen rounded-none border-none' : 'absolute inset-2 rounded-2xl border border-white/10'}`}>
       <TitleBar onOpenSettings={() => setIsSettingsOpen(true)} />
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 xl:p-8 overflow-hidden relative">
@@ -263,6 +299,7 @@ function App() {
         date={selectedDay}
         tasks={userData.schedule[selectedDay] || []}
         onUpdateTask={updateTask}
+        onAddTask={addTask}
         onOpenSettings={() => {
           setIsOverlayOpen(false);
           setIsSettingsOpen(true);
