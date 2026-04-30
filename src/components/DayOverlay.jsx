@@ -11,7 +11,7 @@ const DayOverlay = ({ isOpen, onClose, date, tasks, onUpdateTask, onAddTask, onO
     return (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-6">
             <div
-                className="absolute inset-0 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-500"
+                className="absolute inset-0"
                 onClick={onClose}
             ></div>
             <div className="relative w-full max-w-2xl bg-slate-900 border border-white/10 rounded-[32px] shadow-4xl overflow-hidden animate-fade-up">
