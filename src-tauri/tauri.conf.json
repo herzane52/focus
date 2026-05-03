@@ -16,7 +16,9 @@
         "width": 1600,
         "height": 900,
         "decorations": false,
-        "transparent": true
+        "transparent": true,
+        "resizable": true,
+        "shadow": true
       }
     ],
     "security": {
@@ -31,8 +33,8 @@
     ],
     "publisher": "Herzane",
     "category": "Productivity",
-    "shortDescription": "Profesyonel Takip ve Odaklanma Uygulaması",
-    "longDescription": "Focus, ders çalışma akışınızı yönetmenize ve verimliliğinizi artırmanıza yardımcı olan gelişmiş bir takip uygulamasıdır.",
+    "shortDescription": "Ders Takip ve Odaklanma Uygulaması",
+    "longDescription": "Focus, ders çalışma akışınızı yönetmenize ve verimliliğinizi artırmanıza yardımcı olan ders takip uygulamasıdır.",
     "linux": {
       "deb": {
         "depends": [

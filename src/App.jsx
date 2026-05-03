@@ -266,8 +266,9 @@ function App() {
   }
 
   return (
-    <div className={`flex flex-col overflow-hidden bg-dark-navy shadow-4xl select-none font-sans ${isMaximized ? 'w-screen h-screen rounded-none border-none' : 'absolute inset-2 rounded-2xl border border-white/10'}`}>
-      <TitleBar onOpenSettings={() => setIsSettingsOpen(true)} />
+    <>
+      <div className={`flex flex-col overflow-hidden bg-dark-navy shadow-4xl select-none font-sans ${isMaximized ? 'w-screen h-screen rounded-none border-none' : 'absolute inset-2 rounded-2xl border border-white/10'}`}>
+        <TitleBar onOpenSettings={() => setIsSettingsOpen(true)} />
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 xl:p-8 overflow-hidden relative">
         <div className="w-full h-full max-w-[1600px] flex flex-col xl:flex-row gap-6 items-stretch justify-center animate-fade-up">
@@ -370,7 +371,8 @@ function App() {
           <option key={i} value={s} />
         ))}
       </datalist>
-    </div>
+      </div>
+    </>
   );
 }
 

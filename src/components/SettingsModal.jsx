@@ -144,7 +144,7 @@ const SettingsModal = ({
                                         setUserData(d);
                                         onSave(d);
                                     }}
-                                    className="w-full h-full min-h-[64px] border-2 border-dashed border-white/5 rounded-2xl text-[10px] font-black text-slate-700 hover:text-duo-blue hover:border-duo-blue/30 transition-all tracking-widest uppercase bg-white/[0.01] hover:bg-white/2"
+                                    className="w-full h-full min-h-[64px] border-2 border-dashed border-white/5 rounded-2xl text-[10px] font-black text-slate-700 hover:text-duo-blue hover:border-duo-blue/30 transition-all tracking-widest uppercase bg-white/1 hover:bg-white/2"
                                 >
                                     + YENİ DERS EKLE
                                 </button>
@@ -248,7 +248,7 @@ const SettingsModal = ({
                                         setUserData(d);
                                         onSave(d);
                                     }}
-                                    className="w-full h-full min-h-[100px] border-2 border-dashed border-white/5 rounded-[28px] font-black text-slate-700 hover:text-duo-blue hover:border-duo-blue/30 tracking-[0.2em] uppercase text-[10px] transition-all flex items-center justify-center bg-white/[0.01] hover:bg-white/2"
+                                    className="w-full h-full min-h-[100px] border-2 border-dashed border-white/5 rounded-[28px] font-black text-slate-700 hover:text-duo-blue hover:border-duo-blue/30 tracking-[0.2em] uppercase text-[10px] transition-all flex items-center justify-center bg-white/1 hover:bg-white/2"
                                 >
                                     + YENİ SINAV EKLE
                                 </button>
@@ -394,7 +394,7 @@ const SettingsModal = ({
                                         rel="noreferrer"
                                         className="flex items-center justify-center gap-4 bg-duo-blue hover:bg-blue-600 text-white p-6 rounded-[32px] transition-all shadow-2xl shadow-blue-500/20 active:scale-[0.98] group relative overflow-hidden"
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                        <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 group-hover:scale-125 transition-transform duration-500">
                                             <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                                         </svg>

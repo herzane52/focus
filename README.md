@@ -1,12 +1,12 @@
 ![Focus Logo](image.png)
 
-Focus, Rust (Tauri) ve React kullanılarak geliştirilmiş, modern ve yüksek performanslı bir çalışma takip uygulamasıdır. Ders çalışma sürelerinizi, çözdüğünüz soru sayılarını ve günlük hedeflerinizi şık bir arayüzle takip etmenizi sağlar.
+Focus, Rust (Tauri) ve React kullanılarak geliştirilmiş, ders çalışma takip uygulamasıdır.Çözdüğünüz soru sayılarını ve günlük hedeflerinizi şık bir arayüzle takip etmenizi sağlar.
 
 
 ##  Özellikler
 
 - 📅 **Gelişmiş Takvim:** Günlük çalışma verilerini görselleştirin.
-- 📊 **İstatistikler:** Ders ve konu bazlı soru sayıları ve ilerleme raporları.
+- 📊 **İstatistikler:** Ders ve konu bazlı soru sayıları ve ilerleme takibi.
 - 📋 **Planlama:** Gelecek günler için ders programı ve girilen sınav tarihine kadar hedef belirleme.
 - 🎨 **Modern Arayüz:** Akıcı animasyonlar ve şık tasarım.
 
