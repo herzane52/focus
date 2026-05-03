@@ -120,14 +120,6 @@ fn toggle_maximize(window: tauri::Window) {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    // Ubuntu/Debian tabanlı sistemlerde EGL donanım hızlandırması çökmesini önler.
-    // GitHub Actions'tan derlenen AppImage'ların EGL_BAD_PARAMETER hatası ile
-    // çökmemesi için gereklidir. Arch Linux gibi sistemlerde etkisi yoktur.
-    #[cfg(not(debug_assertions))]
-    {
-        std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
-    }
-
     tauri::Builder::default()
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
