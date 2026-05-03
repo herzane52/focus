@@ -1,0 +1,34 @@
+app-id: tr.herzane.focus
+runtime: org.gnome.Platform
+runtime-version: '50'
+sdk: org.gnome.Sdk
+command: focus-app
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=network
+  - --device=dri
+  - --talk-name=org.freedesktop.Notifications
+  - --filesystem=xdg-download
+  - --filesystem=home
+modules:
+  - name: focus-app
+    buildsystem: simple
+    build-commands:
+      - ar x application.deb
+      - tar xf data.tar.*
+      - cp -r usr/bin /app/
+      - cp -r usr/share /app/
+      - mv /app/share/applications/*.desktop /app/share/applications/tr.herzane.focus.desktop || true
+      - sed -i 's/Exec=focus-app/Exec=focus-app/' /app/share/applications/tr.herzane.focus.desktop
+      - sed -i 's/Icon=focus-app/Icon=tr.herzane.focus/' /app/share/applications/tr.herzane.focus.desktop
+      - |
+        for size in 32x32 128x128 256x256@2; do
+          if [ -f "/app/share/icons/hicolor/$size/apps/focus-app.png" ]; then
+            mv "/app/share/icons/hicolor/$size/apps/focus-app.png" "/app/share/icons/hicolor/$size/apps/tr.herzane.focus.png"
+          fi
+        done
+    sources:
+      - type: file
+        path: build/flatpak/application.deb

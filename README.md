@@ -1,6 +1,13 @@
 ![Focus Logo](image.png)
 
-Focus, Rust (Tauri) ve React kullanılarak geliştirilmiş, ders çalışma takip uygulamasıdır.Çözdüğünüz soru sayılarını ve günlük hedeflerinizi şık bir arayüzle takip etmenizi sağlar.
+<div align="center">
+  <img src="https://img.shields.io/badge/Tauri-24C8DB?style=for-the-badge&logo=tauri&logoColor=white" alt="Tauri">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+</div>
+
+Focus, Rust (Tauri) ve Typescript (Vite, React, Tailwindcss) kullanılarak geliştirilmiş, ders çalışma takip uygulamasıdır. Çözdüğünüz soru sayılarını ve günlük hedeflerinizi şık bir arayüzle takip etmenizi sağlar.
 
 
 ##  Özellikler
@@ -18,7 +25,8 @@ Programı kullanmaya başlamak için en kolay yol, derlenmiş paketleri indirmek
 
 ### Desteklenen Paketler
 - 🐧 **Debian/Ubuntu:** `.deb` paketi.
-- 📦 **AppImage:** Tüm Linux dağıtımları için kurulum gerektirmeyen taşınabilir sürüm.
+- 📦 **Flatpak:** Tüm Linux dağıtımlarında çalışabilen `.flatpak` taşınabilir paket seçeneği. (Flatpak, uygulamanın çalışması için gerekli olan tüm bağımlılıkları kendi içinde barındırır.)
+- 📦 **AppImage:** (Geçici olarak GitHub Releases üzerinden kaldırılmıştır. Çalışma sorunları çözülene kadar sadece yerel olarak derlenebilir.)
 - 🏔️ **Arch Linux:** Hazır paketi indirebilir veya PKGBUILD ile kendiniz paketleyebilirsiniz.
 
 ## 🛠️ Geliştirme ve Kaynak Koddan Derleme
@@ -78,6 +86,10 @@ Bu yöntemde önce **hazırlık** adımını **bir kez** çalıştırırsınız;
       ```bash
       npm run build:arch
       ```
+    - **Flatpak:**
+      ```bash
+      npm run build:flatpak
+      ```
 
 
 
@@ -90,22 +102,6 @@ npm run build:all
 
 > [!TIP]
 > Derleme çıktıları `build/packages/` klasörü altında toplanır. Paketi oluşturduktan sonra kurulum için [Releases](https://github.com/herzane52/focus/releases) sayfasındaki talimatları takip edebilirsiniz.
-
-### Arch Linux alternatif olarak (PKGBUILD) ile Kurulum
-
-Bu yöntem, `PKGBUILD` dosyamızın mevcut `.deb` paketindeki ikonları ve sistem yapılandırmalarını kullanan bir "repacker" (yeniden paketleyici) olarak tasarlanmış olması nedeniyle **önce Debian paketinin oluşturulmuş olmasını** gerektirir.
-
-**Kurulum Adımları:**
-1.  Eğer henüz yapmadıysanız, `npm run build:deb` komutuyla Debian paketini oluşturun.
-2.  Ardından proje kök dizininde şu komutu çalıştırın:
-    ```bash
-    # Proje dizinindeyseniz:
-    makepkg -si
-    ```
-
-### AUR Üzerinden Kurulum (Yakında)
-> [!IMPORTANT]
-> Şu an için AUR desteği sunulmamaktadır. Eğer topluluktan çok yoğun talep gelirse gelecekte eklenebilir.
 
 ## Katkıda Bulunun
 

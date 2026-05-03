@@ -1,7 +1,7 @@
 {
   "name": "focus-app",
   "private": true,
-  "version": "1.3.3",
+  "version": "1.3.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,11 +11,13 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "build:frontend": "npm run build",
-    "build:prep": "npm run build:frontend && CARGO_TARGET_DIR=$PWD/build/target cargo build --release --manifest-path src-tauri/Cargo.toml",
-    "build:deb": "CARGO_TARGET_DIR=$PWD/build/target npm run tauri -- build --bundles deb && mkdir -p build/packages && cp build/target/release/bundle/deb/*.deb build/packages/",
-    "build:appimage": "CARGO_TARGET_DIR=$PWD/build/target APPIMAGE_EXTRACT_AND_RUN=1 NO_STRIP=1 npm run tauri -- build --bundles appimage && mkdir -p build/packages && cp build/target/release/bundle/appimage/*.AppImage build/packages/",
-    "build:arch": "BUILDDIR=$PWD/build/makepkg makepkg -sf --noconfirm && mkdir -p build/packages && mv *.pkg.tar.zst build/packages/",
-    "build:all": "npm run build:prep && CARGO_TARGET_DIR=$PWD/build/target APPIMAGE_EXTRACT_AND_RUN=1 NO_STRIP=1 npm run tauri -- build --bundles deb appimage && mkdir -p build/bin build/packages && cp build/target/release/focus-app build/bin/ && cp build/target/release/bundle/deb/*.deb build/packages/ && cp build/target/release/bundle/appimage/*.AppImage build/packages/ && npm run build:arch"
+    "build:prep": "bash scripts/build.sh prep",
+    "build:deb": "bash scripts/build.sh deb",
+    "build:appimage": "bash scripts/build.sh appimage",
+    "build:arch": "bash scripts/build.sh arch",
+    "build:flatpak": "bash scripts/build.sh flatpak",
+    "bump-version": "node scripts/bump-version.js",
+    "build:all": "bash scripts/build.sh all"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",

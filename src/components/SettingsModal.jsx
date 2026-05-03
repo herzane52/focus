@@ -337,7 +337,7 @@ const SettingsModal = ({
                                 </div>
                                 <div className="flex gap-3 justify-center">
                                     <span className="px-4 py-1.5 bg-duo-blue/10 border border-duo-blue/20 rounded-full text-[10px] font-black text-duo-blue tracking-widest uppercase">
-                                        v1.3.3
+                                        v1.3.5
                                     </span>
                                 </div>
                             </div>

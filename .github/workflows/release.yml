@@ -57,7 +57,7 @@ jobs:
           releaseBody: "Focus uygulamasının yeni sürümü."
           releaseDraft: true
           prerelease: false
-          args: --bundles deb,appimage
+          args: --bundles deb
 
       # deb ve appimage artifact'larını aktar
       - name: Upload Build Artifacts for Linux
@@ -69,13 +69,35 @@ jobs:
             build/target/release/bundle/deb/*.deb
           retention-days: 1
 
+
+      - name: Build Flatpak from deb
+        run: |
+          # Install flatpak tools
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder
+          
+          # Repackage the deb file
+          mkdir -p build/flatpak
+          DEB_PATH=$(ls build/target/release/bundle/deb/*.deb | head -n 1)
+          cp "$DEB_PATH" build/flatpak/application.deb
+          
+          # Setup flathub and runtimes
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.gnome.Platform//50 org.gnome.Sdk//50
+          
+          # Build and bundle
+          mkdir -p build/flatpak
+          flatpak-builder --state-dir=build/flatpak/.flatpak-builder build/flatpak/build-dir tr.herzane.focus.yml --force-clean --repo=build/flatpak/repo
+          VERSION=$(node -p "require('./package.json').version")
+          flatpak build-bundle build/flatpak/repo Focus-v${VERSION}.flatpak tr.herzane.focus
+
       - name: Upload Linux Packages to Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             build/target/release/bundle/deb/*.deb
-            build/target/release/bundle/appimage/*.AppImage
+            *.flatpak
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

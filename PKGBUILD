@@ -1,6 +1,6 @@
 # Maintainer: Herzane <trkaraca@proton.me>
 pkgname=focus
-pkgver=1.3.3
+pkgver=1.3.5
 pkgrel=1
 pkgdesc="Profesyonel Takip ve Odaklanma Uygulaması"
 arch=('x86_64')
